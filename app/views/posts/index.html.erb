@@ -1,12 +1,29 @@
+<% if @current_user %>
+  <form action="/posts" method="post">
+    <p>
+      <label for="body_input">Body</label><br>
+      <textarea name="body" id="body_input"></textarea>
+    </p>
+    <p>
+      <label for="image_input">Image URL</label><br>
+      <input type="text" name="image" id="image_input">
+    </p>
+    <button>Submit Post</button>
+  </form>
+<% else %>
+  <p>You must log in to post.</p>
+<% end %>
+
 <div class="row">
   <% for post in @posts %>
     <div class="col-3">
-      <h4>
-        <%# TODO: display the name of the user who created the post %>
-        <%# 1. find user who created post %>
-        <%# 2. handle any potential bad data where the post is missing a user %>
-        anonymous
-      </h4>
+<h4>
+  <% if post.user %>
+    <%= post.user["first_name"] %>
+  <% else %>
+    anonymous
+  <% end %>
+</h4>
       <img src="<%= post["image"] %>" class="img-fluid w-full">
       <p><%= post["body"] %></p>
     </div>
